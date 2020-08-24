@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom"; class Register extends Component {
+import { Link, withRouter } from "react-router-dom"; 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../actions/authActions";
+
+class Register extends Component {
     constructor() {
         super();
         this.state = {
@@ -9,16 +14,32 @@ import { Link } from "react-router-dom"; class Register extends Component {
             password2: "",
             errors: {}
         };
-    } onChange = e => {
+    } 
+    
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+          this.setState({
+            errors: nextProps.errors
+          });
+        }
+      }
+
+    onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
-    }; onSubmit = e => {
+    }; 
+    
+    onSubmit = e => {
         e.preventDefault(); const newUser = {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
             password2: this.state.password2
-        }; console.log(newUser);
-    }; render() {
+        }; 
+        console.log(newUser);
+        this.props.registerUser(newUser, this.props.history); 
+    }; 
+    
+    render() {
         const { errors } = this.state; return (
             <div className="container">
                 <div className="row">
@@ -33,7 +54,7 @@ import { Link } from "react-router-dom"; class Register extends Component {
                             </p>
                         </div>
                         <form noValidate onSubmit={this.onSubmit}>
-                            <div className="input-field col s12">
+                            <div className="input-field col s10">
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.name}
@@ -43,7 +64,7 @@ import { Link } from "react-router-dom"; class Register extends Component {
                                 />
                                 <label htmlFor="name">Name</label>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col s10">
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.email}
@@ -53,7 +74,7 @@ import { Link } from "react-router-dom"; class Register extends Component {
                                 />
                                 <label htmlFor="email">Email</label>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col s10">
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.password}
@@ -63,7 +84,7 @@ import { Link } from "react-router-dom"; class Register extends Component {
                                 />
                                 <label htmlFor="password">Password</label>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col s10">
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.password2}
@@ -73,7 +94,7 @@ import { Link } from "react-router-dom"; class Register extends Component {
                                 />
                                 <label htmlFor="password2">Confirm Password</label>
                             </div>
-                            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                            <div className="col s10" style={{ paddingLeft: "11.250px" }}>
                                 <button
                                     style={{
                                         width: "150px",
@@ -93,4 +114,17 @@ import { Link } from "react-router-dom"; class Register extends Component {
             </div>
         );
     }
-} export default Register;
+} 
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+Register.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+export default connect(mapStateToProps,{ registerUser })(withRouter(Register));

@@ -5,10 +5,15 @@ import Route from 'react-router-dom/Route';
 import Login from './components/Login';
 import Register from './components/Register';
 import Navbar from './components/NavBar';
+import { Provider } from "react-redux";
+import store from "./store";
+
+// const Route = require("react-router-dom").Route;
 
 class App extends Component {
   render() {
     return (
+      <Provider store={store}>
       <Router>
         <div className="App">
         <Navbar/>
@@ -17,6 +22,7 @@ class App extends Component {
         <Route exact path="/login" component={Login} />
         </div>
       </Router>
+      </Provider>
     );
   }
 }

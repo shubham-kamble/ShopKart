@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const app = express();
 const passport = require("passport");
 const users = require("./routes/users");
+const cors = require("cors")
+
+app.use(cors());
 
 app.use(
     bodyParser.urlencoded({

@@ -10,7 +10,6 @@ ul {
     overflow: hidden;
     border: 1px solid #e7e7e7;
     background-color: #f3f3f3;
-    
   }
   
   li {
@@ -129,7 +128,7 @@ ul {
     padding: 0;
     flex: 0 1 20rem;
     margin: 1rem;
-    height: 28rem;
+    height: 30rem;
     border-bottom: .1rem #c0c0c0 solid;
   }
   .product{
@@ -140,7 +139,6 @@ ul {
   }
   .product-name{
     font-size: 1.5rem;
-    font-weight: bold;
   }
   .product-brand{
     font-size: 1.2rem;
@@ -153,7 +151,5 @@ ul {
   .product-image{
     max-width: 20rem;
     max-height: 20rem;
-  }
-  .product-rating{
-    margin-bottom: 1rem;
+    margin-top: 20px;
   }

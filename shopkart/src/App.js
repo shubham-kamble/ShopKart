@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Navbar from './components/NavBar';
 import store from "./store";
+import Product from './components/Product';
 
 // const Route = require("react-router-dom").Route;
 
@@ -21,6 +22,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/product/:id" component={Product} />
           </div>
         </Router>
       </Provider>

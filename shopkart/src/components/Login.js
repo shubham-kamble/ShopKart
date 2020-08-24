@@ -19,6 +19,13 @@ class Login extends Component {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/"); // push user to mainpage when they login
     }if (nextProps.errors) {
+      console.log(nextProps.errors);
+      if(nextProps.errors.hasOwnProperty('passwordincorrect'))
+        alert("Invalid Password");
+      else if(nextProps.errors.hasOwnProperty('emailnotfound'))
+        alert("Invalid Email");
+      else
+        alert("Logged In Successfully!");
       this.setState({
         errors: nextProps.errors
       });

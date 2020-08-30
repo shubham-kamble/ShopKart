@@ -1,23 +1,10 @@
-import mongoose from 'mongoose';
-
-const orderItemSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    qty: { type: Number, required: true },
-    image: { type: String, required: true },
-    price: { type: String, required: true },
-    product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true
-    },
-});
+var mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    orderItems: [orderItemSchema],
-    totalPrice: { type: Number },
-    isDelivered: { type: Boolean, default: false },
+    orderItems: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true}],
+    totalPrice: { type: String },
     orderedDate: { type: Date }
 });
 
-export default mongoose.model("Order", orderSchema);
+module.exports = mongoose.model("Order", orderSchema);

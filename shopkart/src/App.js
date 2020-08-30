@@ -33,7 +33,7 @@ class App extends Component {
             <Route exact path="/product/:id" component={Product} />
             <Route exact path="/products/" component={Categories} />
             <Route path="/cart/:id?" component={Cart} />
-            <Route exact path="/myorder/" component={Orders} />
+            <Route exact path="/myorders" component={Orders} />
           </div>
         </Router>
         <footer>©1998-2020 ShopKart </footer>

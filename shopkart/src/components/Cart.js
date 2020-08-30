@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 function Cart(props) {
 
@@ -20,6 +21,35 @@ function Cart(props) {
   const removeFromCartHandler = (productId) => {
     dispatch(removeFromCart(productId));
   }
+
+  const buyNow = async () => {
+    if (localStorage.getItem('jwtToken') === null) {
+        alert('Please Login to continue');
+        props.history.push('/login/');
+    }
+    else {
+        let orderItems = cartItems.map((a => a.product));
+        var order = {
+            "orderItems": orderItems,
+            "user": localStorage.getItem('userid'),
+            "totalPrice": cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
+        }
+        if(order.totalPrice>0){
+          if (window.confirm('Confirm')) {
+              Axios.post("http://localhost:5002/api/addorder/", order).then(res => {
+                  props.history.push('/myorders/');
+                  for(let item of orderItems){
+                    dispatch(removeFromCart(item));
+                  }
+              }).catch(err => {
+                  console.log(err);
+              });
+          }
+        }
+        else
+        alert("Empty cart!");
+    }
+}
 
   return <div className="cart row">
     <div className="cart-list col-9">
@@ -62,7 +92,7 @@ function Cart(props) {
         :
         ₹ {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
       </h3>
-      <button disabled={cartItems.length === 0}>
+      <button onClick={buyNow}>
         Buy Now
       </button>
 

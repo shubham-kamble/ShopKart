@@ -346,3 +346,10 @@ select {
     background-color: #4CAF50;
     width:95%;
 }
+
+
+/* css for orderpage */
+
+.order-container{
+    width: 100%;
+}

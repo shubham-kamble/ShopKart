@@ -14,18 +14,15 @@ class Login extends Component {
       errors: {}
     };
   }
-  
-  componentWillReceiveProps(nextProps) {
+
+  async componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/"); // push user to mainpage when they login
-    }if (nextProps.errors) {
+      window.location.reload(true);
+    }
+    else if(nextProps.errors) {
       console.log(nextProps.errors);
-      if(nextProps.errors.hasOwnProperty('passwordincorrect'))
-        alert("Invalid Password");
-      else if(nextProps.errors.hasOwnProperty('emailnotfound'))
-        alert("Invalid Email");
-      else
-        alert("Logged In Successfully!");
+      alert(nextProps.errors.msg);
       this.setState({
         errors: nextProps.errors
       });
@@ -37,11 +34,11 @@ class Login extends Component {
   };
 
   onSubmit = e => {
-    e.preventDefault(); 
+    e.preventDefault();
     var userData = {
       email: this.state.email,
       password: this.state.password
-    }; 
+    };
     this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
     console.log(userData);
   };
@@ -90,7 +87,7 @@ class Login extends Component {
       </div>
     );
   }
-} 
+}
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
@@ -103,4 +100,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps,{ loginUser })(Login);
+export default connect(mapStateToProps, { loginUser })(Login);

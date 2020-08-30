@@ -13,7 +13,6 @@ class Home extends Component {
     
       async componentDidMount() {
         const {data} =await Axios.get("http://localhost:5001/api/products");
-        console.log(data);
         this.setState({
             products:data
         })
@@ -33,7 +32,7 @@ class Home extends Component {
                                             <div className="product-name">
                                                 <Link to={'/product/'+product._id} >{product.name}</Link>
                                             </div>
-                                            <div className="product-brand">{product.brand}</div>
+                                            <div className="product-brand">{product.desc}</div>
                                             <div className="product-price">₹{product.price}</div>
                                         </div>
                                     </li>)

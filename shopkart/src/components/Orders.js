@@ -21,6 +21,7 @@ function Orders(props) {
             <table className="table table-light table-striped table-hover">
                 <thead>
                     <tr>
+                        <th className="order-prod">ID</th>
                         <th className="order-prod">Products</th>
                         <th className="order-price">Total Price</th>
                         <th className="order-date">Date</th>
@@ -28,8 +29,9 @@ function Orders(props) {
                 </thead>
                 <tbody>
                     {
-                        orders.map(order =>
+                        orders.map((order,index) =>
                             <tr>
+                                <td style={{width:'100px'}}>{index+1}</td>
                                 <td >{
                                     order.orderItems.map(
                                         x => <OrderedProduct id={x}></OrderedProduct>

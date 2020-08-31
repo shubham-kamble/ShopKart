@@ -12,6 +12,7 @@ import Product from './components/Product';
 import Categories from './components/Categories';
 import Cart from './components/Cart';
 import Orders from './components/Orders';
+import Admin from './components/Admin';
 
 // const Route = require("react-router-dom").Route;
 
@@ -34,6 +35,7 @@ class App extends Component {
             <Route exact path="/products/" component={Categories} />
             <Route path="/cart/:id?" component={Cart} />
             <Route exact path="/myorders" component={Orders} />
+            <Route exact path="/admin" component={Admin} />
           </div>
         </Router>
         <footer>©1998-2020 ShopKart </footer>

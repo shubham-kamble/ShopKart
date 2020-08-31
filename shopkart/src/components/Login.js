@@ -17,8 +17,13 @@ class Login extends Component {
 
   async componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/"); // push user to mainpage when they login
-      window.location.reload(true);
+      if(localStorage.getItem("jwtToken").split(',')[0]==='admin'){
+        this.props.history.push("/admin");
+        window.location.reload(true);
+      }else{
+        this.props.history.push("/"); // push user to mainpage when they login
+        window.location.reload(true);
+      }
     }
     else if(nextProps.errors) {
       console.log(nextProps.errors);

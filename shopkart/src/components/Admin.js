@@ -23,7 +23,14 @@ export default function Admin() {
         fetchProd();
     }, []);
 
-    return (
+    if(localStorage.getItem("jwtToken")===null||localStorage.getItem("jwtToken").split(',')[0]!=='admin'){
+        return(
+            <div style={{height:'80vh'}}>
+                Access Denied
+            </div>
+        )
+    }
+    else return (
         <MaterialTable
             title="Products List"
             columns={cols.columns}

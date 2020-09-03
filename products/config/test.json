@@ -1,1 +1,3 @@
-{ "DBHost": "mongodb://localhost/shopkart-test" }
+{
+    "DBHost": "mongodb://localhost/shopkart-test"
+}

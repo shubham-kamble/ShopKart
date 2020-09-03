@@ -2,8 +2,10 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
-var Product = require("./Product.model")
-var db = 'mongodb://localhost/shopkart';
+var Product = require("./Product.model");
+let morgan = require('morgan');
+// var db = 'mongodb://localhost/shopkart';
+let config = require('config');
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 // var db = "mongodb+srv://database-admin:admin123@cluster0.nntjh.gcp.mongodb.net/shopkart?retryWrites=true&w=majority"
@@ -33,10 +35,15 @@ const swaggerOptions = {
 app.use(cors());
 mongoose
     .connect(
-        db, { useNewUrlParser: true }
+        config.DBHost, { useNewUrlParser: true }
     )
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
+
+    if(config.util.getEnv('NODE_ENV') !== 'test') {
+        //morgan для вывода логов в консоль
+        app.use(morgan('combined')); //'combined' выводит логи в стиле apache
+    }
 /**
  * @swagger
  * /products:
@@ -235,3 +242,6 @@ app.get('/api/searchproduct2/:keyword', function (req, res) {
 
 
 app.listen(5001, () => { console.log("product microservice started at localhost:5001") });
+
+
+module.exports = app;

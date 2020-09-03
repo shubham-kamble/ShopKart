@@ -7,7 +7,25 @@ var validateRegisterInput = require("../validation/register");
 var validateLoginInput = require("../validation/login");
 var User = require("../models/User");
 
-
+/**
+ * @swagger
+ * /users/register:
+ *  post:
+ *    description: register a user
+ *    parameters:
+ *      - name: User
+ *        in: query
+ *        description: user object 
+ *        required: true
+ *        schema:
+ *          type: json
+ *          format: json
+ *    responses:
+ *      '200':
+ *        description: Successfully registered user
+ *      '400':
+ *        description: User already exists
+ */
 router.post("/register", (req, res) => {
     var { errors, isValid } = validateRegisterInput(req.body);
     if (!isValid) {
@@ -36,7 +54,27 @@ router.post("/register", (req, res) => {
     });
 });
 
-
+/**
+ * @swagger
+ * /users/login:
+ *  post:
+ *    description: login user
+ *    parameters:
+ *      - name: User
+ *        in: query
+ *        description: user object 
+ *        required: true
+ *        schema:
+ *          type: json
+ *          format: json
+ *    responses:
+ *      '200':
+ *        description: Successfully returned user token
+ *      '400':
+ *        description: invalid password
+ *      '404':
+ *        description: invalid email
+ */
 router.post("/login", (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
     if (!isValid) {
@@ -63,7 +101,7 @@ router.post("/login", (req, res) => {
                     (err, token) => {
                         res.json({
                             userid: user.id,
-                            token: user.role+ ',' + token
+                            token: user.role + ',' + token
                         });
                     }
                 );

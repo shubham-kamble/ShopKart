@@ -353,3 +353,9 @@ select {
 .order-container{
     width: 100%;
 }
+
+/* misc */
+
+.outerbox{
+    height: 80vh;
+}

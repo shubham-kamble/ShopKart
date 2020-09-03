@@ -17,7 +17,7 @@ function Orders(props) {
     if (localStorage.getItem("jwtToken") === null) {
         return <div style={{height:'80vh'}}>Please Login </div>
     } else {
-        return <div>
+        return <div className="outerbox">
             <table className="table table-light table-striped table-hover">
                 <thead>
                     <tr>

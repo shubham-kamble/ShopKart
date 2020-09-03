@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 function Product(props) {
 
@@ -21,9 +23,16 @@ function Product(props) {
 
     const buyNow = async () => {
         if (localStorage.getItem('jwtToken') === null) {
-            alert('Please Login to continue');
-            props.history.push('/login/');
-        }
+            confirmAlert({
+              title: 'Please Login in to continue!',
+              buttons: [
+                {
+                  label: 'OK',
+                  onClick: () => props.history.push('/login/')
+                }
+              ]
+            });
+          }
         else {
             var order = {
                 "orderItems": [prodId],
@@ -31,15 +40,28 @@ function Product(props) {
                 "totalPrice": prod.price
             }
             console.log(order);
-            if (window.confirm('Confirm')) {
-                Axios.post("http://localhost:5002/api/addorder/", order).then(res => {
-                    props.history.push('/myorders/');
-                }).catch(err => {
-                    console.log(err);
-                });
-            }
+            confirmAlert({
+                title: 'Confirm!',
+                message: 'Please confirm your Total: ' + order.totalPrice,
+                buttons: [
+                  {
+                    label: 'OK',
+                    onClick: () => {
+                      Axios.post("http://localhost:5002/api/addorder/", order).then(res => {
+                        props.history.push('/myorders/');
+                      }).catch(err => {
+                        console.log(err);
+                      });
+                    }
+                  },
+                  {
+                    label: 'Cancel'
+                  }
+                ]
+              });
         }
     }
+
 
     return <div>
         <div className="product-details">

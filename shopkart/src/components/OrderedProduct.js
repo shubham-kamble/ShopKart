@@ -13,7 +13,9 @@ function OrderedProduct(props) {
         fetchProd();
     }, [props.id]);
 
-    return <div>{product.name}</div>
+    if(product===undefined)
+        return <div>Unknown/Unavailable Product</div>
+    else return <div>{product.name}</div>
 }
 
 export default OrderedProduct;

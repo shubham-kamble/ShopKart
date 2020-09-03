@@ -4,8 +4,32 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Order = require("./Order.model")
 var db = 'mongodb://localhost/shopkart';
+// var db = "mongodb+srv://database-admin:admin123@cluster0.nntjh.gcp.mongodb.net/shopkart?retryWrites=true&w=majority"
 var cors = require("cors")
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 var jsonParser = bodyParser.json();
+
+
+const swaggerOptions = {
+    swaggerDefinition: {
+      info: {
+        version: "1.0.0",
+        title: "Order API",
+        description: "Order API Information",
+        contact: {
+          name: "SK"
+        },
+        servers: ["http://localhost:5002"]
+      }
+    },
+    apis: ["main.js"]
+  };
+
+
+  const swaggerDocs = swaggerJsDoc(swaggerOptions);
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 app.use(cors());
 mongoose
@@ -14,7 +38,23 @@ mongoose
     )
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
-
+/**
+ * @swagger
+ * /addorder:
+ *  post:
+ *    description: add a order
+ *    parameters:
+ *      - name: Order
+ *        in: query
+ *        description: order object 
+ *        required: true
+ *        schema:
+ *          type: json
+ *          format: json
+ *    responses:
+ *      '200':
+ *        description: Successfully added order
+ */
 app.post("/api/addorder", jsonParser, async function (req, res) {
     console.log(req.body);
 
@@ -32,7 +72,23 @@ app.post("/api/addorder", jsonParser, async function (req, res) {
         res.status(201).send({ msg: "New Order Created", data: newOrderCreated });
     }
 });
-
+/**
+ * @swagger
+ * /getorders/:id:
+ *  get:
+ *    description: get an order
+ *    parameters:
+ *      - name: id
+ *        in: query
+ *        description: order id 
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: string
+ *    responses:
+ *      '200':
+ *        description: Successfully returned order
+ */
 app.get('/api/getorders/:id', function (req, res) {
     console.log('getting all orders by userid');
     Order.find({
@@ -48,4 +104,4 @@ app.get('/api/getorders/:id', function (req, res) {
 });
 
 
-app.listen(5002, () => { console.log("product microservice started at localhost:5001") });
+app.listen(5002, () => { console.log("product microservice started at localhost:5002") });

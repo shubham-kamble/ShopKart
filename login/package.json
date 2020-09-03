@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon main.js"
+    "start": "nodemon main.js"
   },
   "author": "SK",
   "license": "ISC",
@@ -20,5 +20,9 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "validator": "^13.1.1"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
   }
 }

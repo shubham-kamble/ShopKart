@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon main.js"
+    "start": "nodemon main.js"
   },
   "author": "SK",
   "license": "ISC",
@@ -13,5 +13,9 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.10.2"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
   }
 }

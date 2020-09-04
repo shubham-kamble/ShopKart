@@ -3,7 +3,8 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Order = require("./Order.model")
-var db = 'mongodb://localhost/shopkart';
+let config = require('config');
+// var db = 'mongodb://localhost/shopkart';
 // var db = "mongodb+srv://database-admin:admin123@cluster0.nntjh.gcp.mongodb.net/shopkart?retryWrites=true&w=majority"
 var cors = require("cors")
 const swaggerJsDoc = require("swagger-jsdoc");
@@ -34,7 +35,7 @@ const swaggerOptions = {
 app.use(cors());
 mongoose
     .connect(
-        db, { useNewUrlParser: true }
+        config.DBHost, { useNewUrlParser: true }
     )
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
@@ -105,3 +106,5 @@ app.get('/api/getorders/:id', function (req, res) {
 
 
 app.listen(5002, () => { console.log("product microservice started at localhost:5002") });
+
+module.exports = app;

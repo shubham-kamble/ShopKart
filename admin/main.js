@@ -1,10 +1,10 @@
-
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Product = require("./Product.model")
-var db = 'mongodb://localhost/shopkart';
+// var db = 'mongodb://localhost/shopkart';
+let config = require('config');
 // var db = "mongodb+srv://database-admin:admin123@cluster0.nntjh.gcp.mongodb.net/shopkart?retryWrites=true&w=majority"
 var cors = require("cors");
 const swaggerJsDoc = require("swagger-jsdoc");
@@ -33,7 +33,7 @@ var jsonParser = bodyParser.json();
 app.use(cors());
 mongoose
     .connect(
-        db, { useNewUrlParser: true }
+        config.DBHost, { useNewUrlParser: true }
     )
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
@@ -117,7 +117,7 @@ app.delete('/api/deleteproduct/:id', function (req, res) {
  *        description: Successfully updated product
  */
 app.put('/api/updateproduct/:id', jsonParser, async function (req, res) {
-    console.log('adding new product');
+    console.log('updating a product');
     console.log(req.body);
     Product.findByIdAndUpdate(req.params.id,
         {
@@ -133,6 +133,7 @@ app.put('/api/updateproduct/:id', jsonParser, async function (req, res) {
                 console.log(err)
             }
             else {
+                console.log("updated");
                 res.status(202).send({ msg: "Updated Successfully" });
             }
         });
@@ -142,3 +143,5 @@ app.put('/api/updateproduct/:id', jsonParser, async function (req, res) {
 
 
 app.listen(5003, () => { console.log("product microservice started at localhost:5003") });
+
+module.exports = app;
